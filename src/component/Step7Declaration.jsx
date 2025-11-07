@@ -4,7 +4,6 @@ const Step7Declaration = ({ prevStep, formData }) => {
   const [place, setPlace] = useState("");
   const [date, setDate] = useState("");
   const [confirmed, setConfirmed] = useState(false);
-  const [missionFile, setMissionFile] = useState(null);
 
   const [partners, setPartners] = useState([
     { name: "", cnic: "", signature: null },
@@ -30,11 +29,10 @@ const Step7Declaration = ({ prevStep, formData }) => {
     const partner1Valid =
       partner1.name && partner1.cnic.length === 13 && partner1.signature;
 
-    const allRequired =
-      partner1Valid && place && date && missionFile && confirmed;
+    const allRequired = partner1Valid && place && date && confirmed;
 
     setIsValid(allRequired);
-  }, [partners, place, date, missionFile, confirmed]);
+  }, [partners, place, date, confirmed]);
 
   const handleSubmit = () => {
     console.log("✅ Final Submitted Data:", {
@@ -42,7 +40,6 @@ const Step7Declaration = ({ prevStep, formData }) => {
       partners,
       place,
       date,
-      missionFile,
     });
   };
 
@@ -160,23 +157,6 @@ const Step7Declaration = ({ prevStep, formData }) => {
         onChange={(e) => setDate(e.target.value)}
         className="w-full border rounded p-2 mb-3"
       />
-
-      {/* Mission File */}
-      <label className="block mb-2 font-medium text-gray-700">
-        Upload Mission & Message Statement (PDF/Image)
-        <span className="text-red-500">*</span>
-      </label>
-      <input
-        type="file"
-        accept=".pdf,.jpg,.png"
-        onChange={(e) => setMissionFile(e.target.files[0])}
-        className="block w-full border rounded p-2 mb-4"
-      />
-      {missionFile && (
-        <p className="text-green-600 text-sm mb-2">
-          ✅ File uploaded: {missionFile.name}
-        </p>
-      )}
 
       {/* Confirm Checkbox */}
       <label className="flex items-center gap-2 mb-4">

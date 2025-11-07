@@ -7,11 +7,6 @@ const Step6Documents = ({ nextStep, prevStep, formData, setFormData }) => {
     { id: 1, label: "Colour page of institute along with monogram" },
     { id: 2, label: "Message and mission statement of institute by the Director or Principal along with picture" },
     { id: 3, label: "Application for affiliation to Secretary TTB" },
-    { id: 4, label: "Staff statement showing qualification, salary, cell No. and signature" },
-    { id: 5, label: "Equipment list" },
-    { id: 6, label: "Building map" },
-    { id: 7, label: "Building agreement if rented" },
-    { id: 8, label: "Library book list" },
   ];
 
   const handleFileChange = (id, file) => {

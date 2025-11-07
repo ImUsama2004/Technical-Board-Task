@@ -6,7 +6,6 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
     address: formData.address || "",
     trade: formData.trade || "",
     startDate: formData.startDate || "",
-    foundedYear: formData.foundedYear || "",
   });
 
   const [isValid, setIsValid] = useState(false);
@@ -17,8 +16,7 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
       data.name.trim() !== "" &&
       data.address.trim() !== "" &&
       data.trade.trim() !== "" &&
-      data.startDate.trim() !== "" &&
-      data.foundedYear.trim() !== "";
+      data.startDate.trim() !== "";
     setIsValid(valid);
   }, [data]);
 
@@ -88,20 +86,6 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
             type="date"
             name="startDate"
             value={data.startDate}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Founded Year <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="number"
-            name="foundedYear"
-            placeholder="Enter founded year (e.g. 2015)"
-            value={data.foundedYear}
             onChange={handleChange}
             className="w-full border rounded p-2"
           />
