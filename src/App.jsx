@@ -6,8 +6,8 @@ import MultiStepForm from "./component/MultiStepForm";
 
 function App() {
   // Check if user is logged in by seeing if token exists
-  // const isLoggedIn = localStorage.getItem("token");
-  const isLoggedIn = "djflaksjflkjadslkfj"
+  const isLoggedIn = localStorage.getItem("token");
+  // const isLoggedIn = "djflaksjflkjadslkfj"
 
   return (
     <Router>
@@ -17,7 +17,7 @@ function App() {
 
         {/* Signup Page */}
         <Route
-          path="/signup"
+          path="/register"
           element={isLoggedIn ? <Navigate to="/form" /> : <Signup />}
         />
 
