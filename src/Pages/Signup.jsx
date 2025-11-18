@@ -23,13 +23,14 @@ const Signup = () => {
     if (!isValid) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/signup", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: user.name, email: user.email, password: user.password })
       });
 
       if (response.ok) {
+        alert("An Email is sent to you!Click on the Link to verify your email, and then Login")
         navigate("/login"); // go to login after successful signup
       } else {
         const data = await response.json();

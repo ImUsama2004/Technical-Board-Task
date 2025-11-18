@@ -9,8 +9,8 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
   });
 
   const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // ✅ Real-time validation
   useEffect(() => {
     const valid =
       data.name.trim() !== "" &&
@@ -23,10 +23,37 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
   const handleChange = (e) =>
     setData({ ...data, [e.target.name]: e.target.value });
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!isValid) return;
-    setFormData({ ...formData, ...data });
-    nextStep();
+
+    try {
+      setLoading(true);
+
+      // Merge form data before sending
+      const mergedData = { ...formData, ...data };
+
+      // ✅ API call to backend
+      const res = await fetch("http://localhost:5000/api/general", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(mergedData),
+      });
+
+      if (!res.ok) throw new Error("Failed to submit institute info");
+
+      const responseData = await res.json();
+
+      // Optionally store backend response if needed
+      setFormData({ ...mergedData, id: responseData.id });
+
+      // Go to next step
+      nextStep();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error submitting data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,18 +119,17 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
         </div>
       </div>
 
-      {/* Navigation Buttons */}
       <div className="flex justify-end mt-6">
         <button
           onClick={handleNext}
-          disabled={!isValid}
+          disabled={!isValid || loading}
           className={`px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-            isValid
+            isValid && !loading
               ? "bg-blue-600 hover:bg-blue-700 text-white"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
-          Next
+          {loading ? "Submitting..." : "Next"}
         </button>
       </div>
     </>
