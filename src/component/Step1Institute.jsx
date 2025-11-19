@@ -25,35 +25,8 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
 
   const handleNext = async () => {
     if (!isValid) return;
-
-    try {
-      setLoading(true);
-
-      // Merge form data before sending
-      const mergedData = { ...formData, ...data };
-
-      // ✅ API call to backend
-      const res = await fetch("http://localhost:5000/api/general", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(mergedData),
-      });
-
-      if (!res.ok) throw new Error("Failed to submit institute info");
-
-      const responseData = await res.json();
-
-      // Optionally store backend response if needed
-      setFormData({ ...mergedData, id: responseData.id });
-
-      // Go to next step
-      nextStep();
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Error submitting data. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    setFormData({ ...formData, ...data });
+    nextStep();
   };
 
   return (

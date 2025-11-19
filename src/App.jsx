@@ -5,28 +5,22 @@ import Login from "./Pages/Login";
 import MultiStepForm from "./component/MultiStepForm";
 
 function App() {
-  // Check if user is logged in by seeing if token exists
-  const isLoggedIn = localStorage.getItem("token");
-  // const isLoggedIn = "djflaksjflkjadslkfj"
+  const isLoggedIn = localStorage.getItem("token"); // token key used in Login component
 
   return (
     <Router>
       <Routes>
-        {/* First visit defaults to Signup */}
-        <Route path="/" element={<Navigate to="/signup" />} />
-
-        {/* Signup Page */}
+        {/* Default route */}
         <Route
-          path="/signup"
-          element={isLoggedIn ? <Navigate to="/form" /> : <Signup />}
+          path="/"
+          element={isLoggedIn ? <Navigate to="/form" /> : <Navigate to="/login" />}
         />
 
-        {/* Login Page */}
-        
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/form" /> : <Login />}
-        />
+        {/* Signup Page - always accessible */}
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Login Page - always accessible */}
+        <Route path="/login" element={<Login />} />
 
         {/* MultiStepForm - Protected Route */}
         <Route
@@ -34,8 +28,8 @@ function App() {
           element={isLoggedIn ? <MultiStepForm /> : <Navigate to="/login" />}
         />
 
-        {/* Redirect unknown routes to signup */}
-        <Route path="*" element={<Navigate to="/signup" />} />
+        {/* Catch-all route */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

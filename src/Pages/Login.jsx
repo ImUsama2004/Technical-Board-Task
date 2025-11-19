@@ -20,7 +20,7 @@ const Login = () => {
 
     try {
       // Replace with your actual API endpoint
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: data.email, password: data.password }),
@@ -29,9 +29,9 @@ const Login = () => {
       const result = await response.json();
 
       if (response.ok) {
-        // Save token or user info in localStorage for session
+        // Save token in localStorage
         localStorage.setItem("token", result.token); 
-        navigate("/form"); // Redirect to MultiStepForm after successful login
+        navigate("/form"); // Redirect after login
       } else {
         alert(result.message || "Invalid credentials!");
       }
