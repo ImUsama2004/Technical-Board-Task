@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../component/Header";
 
+
 const Login = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({ email: "", password: "" });
@@ -20,7 +21,7 @@ const Login = () => {
 
     try {
       // Replace with your actual API endpoint
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch(`${import.meta.VITE_API_LIVE_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: data.email, password: data.password }),
