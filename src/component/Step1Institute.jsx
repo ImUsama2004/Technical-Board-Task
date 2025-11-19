@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API from "../API/api"; // <-- import your axios instance
 
 const Step1Institute = ({ nextStep, formData, setFormData }) => {
   const [data, setData] = useState({
@@ -17,6 +18,7 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
       data.address.trim() !== "" &&
       data.trade.trim() !== "" &&
       data.startDate.trim() !== "";
+
     setIsValid(valid);
   }, [data]);
 
@@ -29,27 +31,19 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
     try {
       setLoading(true);
 
-      // Merge form data before sending
+      // Merge existing data + new data
       const mergedData = { ...formData, ...data };
 
-      // ✅ API call to backend
-      const res = await fetch(`${import.meta.VITE_API_LIVE_URL}/api/general`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(mergedData),
-      });
+      // ✅ Using axios API instance (auto token + refresh)
+      const res = await API.post("/general", mergedData);
 
-      if (!res.ok) throw new Error("Failed to submit institute info");
+      // Backend response (for example: { id: 123 })
+      setFormData({ ...mergedData, id: res.data.id });
 
-      const responseData = await res.json();
-
-      // Optionally store backend response if needed
-      setFormData({ ...mergedData, id: responseData.id });
-
-      // Go to next step
+      // Move to next screen
       nextStep();
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting data:", error);
       alert("Error submitting data. Please try again.");
     } finally {
       setLoading(false);
@@ -136,4 +130,4 @@ const Step1Institute = ({ nextStep, formData, setFormData }) => {
   );
 };
 
-export default Step1Institute;
+export default Step1Institute;

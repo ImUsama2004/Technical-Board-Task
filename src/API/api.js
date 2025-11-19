@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // change your backend base URL
+  baseURL: `${import.meta.VITE_API_LIVE_URL}/api`, // change your backend base URL
   withCredentials: true, // IMPORTANT → cookies will be sent automatically
 });
 
@@ -55,7 +55,7 @@ API.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await API.post("/auth/refresh-token"); // refresh token API
+        const { data } = await API.post("/auth/refresh"); // refresh token API
 
         const newAccessToken = data.accessToken;
 
